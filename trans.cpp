@@ -66,6 +66,8 @@ static bool g_mouseClickDown = false;    // is the mouse button pressed
 static bool g_mouseLClickButton, g_mouseRClickButton, g_mouseMClickButton;
 static int g_mouseClickX, g_mouseClickY; // coordinates for mouse click event
 
+static int affectedObject = 0;
+
 struct ShaderState {
   GlProgram program;
 
@@ -325,7 +327,7 @@ static void motion(const int x, const int y) {
   }
 
   if (g_mouseClickDown) {
-    g_objectRbt[0] *= m; // Caddywumpus!  FIXME
+    g_objectRbt[affectedObject] *= m; // Caddywumpus!  FIXME
     glutPostRedisplay(); // we always redraw if we changed the scene
   }
 
@@ -370,6 +372,11 @@ static void keyboard(const unsigned char key, const int x, const int y) {
     glFlush();
     writePpmScreenshot(g_windowWidth, g_windowHeight, "out.ppm");
     cout << "Screenshot written to out.ppm." << endl;
+    break;
+  case 'o':
+    if (affectedObject == 0) { affectedObject = 1;}
+    else { affectedObject = 0;}
+    cout << "Object cycled!" << endl;
     break;
   }
   glutPostRedisplay();
