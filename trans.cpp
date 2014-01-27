@@ -194,7 +194,7 @@ static shared_ptr<Geometry> g_ground, g_cube;
 
 static Matrix4 g_skyRbt = Matrix4::makeTranslation(Cvec3(0.0, 0.25, 4.0));
 static Matrix4 g_objectRbt[2] = {Matrix4::makeTranslation(Cvec3(-1,0,0)), Matrix4::makeTranslation(Cvec3(1,0,0))};  // currently only 1 obj is defined
-static Cvec3f g_objectColors[1] = {Cvec3f(1, 0, 0)};
+static Cvec3f g_objectColors[2] = {Cvec3f(1, 1, 1),Cvec3f(0, 0, 0)};
 
 ///////////////// END OF G L O B A L S //////////////////////////////////////////////////
 
@@ -284,7 +284,7 @@ static void drawStuff() {
 
   MVM = invEyeRbt * g_objectRbt[1];
   sendModelViewMatrix(curSS, MVM);
-  safe_glUniform3f(curSS.h_uColor, g_objectColors[0][0], g_objectColors[0][1], g_objectColors[0][2]);
+  safe_glUniform3f(curSS.h_uColor, g_objectColors[1][0], g_objectColors[1][1], g_objectColors[1][2]);
   safe_glUniform1i(curSS.h_uTexUnit0, 1); // texture unit 1 for cube
   g_cube->draw(curSS);
 }
