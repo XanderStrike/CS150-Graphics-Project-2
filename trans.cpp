@@ -66,7 +66,8 @@ static bool g_mouseClickDown = false;    // is the mouse button pressed
 static bool g_mouseLClickButton, g_mouseRClickButton, g_mouseMClickButton;
 static int g_mouseClickX, g_mouseClickY; // coordinates for mouse click event
 
-static int affectedObject = 0;
+static int affectedObject = 1; // start with one of the boxes
+static int viewpoint = 0; // start looking through camera
 
 struct ShaderState {
   GlProgram program;
@@ -263,7 +264,7 @@ static void drawStuff() {
   sendProjectionMatrix(curSS, projmat);
 
   // use the skyRbt as the eyeRbt
-  const Matrix4 eyeRbt = g_objectRbt[0]; // eye is the first object now
+  const Matrix4 eyeRbt = g_objectRbt[viewpoint]; // eye is the first object now
   const Matrix4 invEyeRbt = inv(eyeRbt);
 
   // draw ground
@@ -376,6 +377,10 @@ static void keyboard(const unsigned char key, const int x, const int y) {
   case 'o':
     affectedObject = (affectedObject + 1) % 3;
     cout << "Object cycled!" << endl;
+    break;
+  case 'v':
+    viewpoint = (viewpoint + 1) % 3;
+    cout << "Viewpoint cycled!" << endl;
     break;
   }
   glutPostRedisplay();
