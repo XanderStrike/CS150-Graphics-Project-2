@@ -328,7 +328,11 @@ static void motion(const int x, const int y) {
   }
 
   if (g_mouseClickDown) {
-    g_objectRbt[affectedObject] *= m; // Caddywumpus!  FIXME
+
+    Matrix4 relative_matrix;
+    relative_matrix = transFact(g_objectRbt[affectedObject]) * linFact(g_objectRbt[viewpoint]);
+
+    g_objectRbt[affectedObject] = relative_matrix * m * inv(relative_matrix) * g_objectRbt[affectedObject]; // Caddywonderful!
     glutPostRedisplay(); // we always redraw if we changed the scene
   }
 
@@ -382,6 +386,28 @@ static void keyboard(const unsigned char key, const int x, const int y) {
     viewpoint = (viewpoint + 1) % 3;
     cout << "Viewpoint cycled!" << endl;
     break;
+  case 'd':
+    Matrix4 asdf = linFact(g_objectRbt[0]);
+    cout << "[" << asdf(0,0)
+      << ' ' << asdf(0,1)
+      << ' ' << asdf(0,2)
+      << ' ' << asdf(0,3)
+      << "]" << endl;
+    cout << "[" << asdf(1,0)
+      << ' ' << asdf(1,1)
+      << ' ' << asdf(1,2)
+      << ' ' << asdf(1,3)
+      << "]" << endl;
+    cout << "[" << asdf(2,0)
+      << ' ' << asdf(2,1)
+      << ' ' << asdf(2,2)
+      << ' ' << asdf(2,3)
+      << "]" << endl;
+    cout << "[" << asdf(3,0)
+      << ' ' << asdf(3,1)
+      << ' ' << asdf(3,2)
+      << ' ' << asdf(3,3)
+      << "]" << endl;
   }
   glutPostRedisplay();
 }
