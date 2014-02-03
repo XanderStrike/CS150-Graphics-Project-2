@@ -301,7 +301,26 @@ inline Matrix4 transFact(const Matrix4& m) {
 }
 
 inline Matrix4 linFact(const Matrix4& m) {
-  // TODO
+  Matrix4 trans;
+
+  trans(0,0) = m(0,0);
+  trans(0,1) = m(0,1);
+  trans(0,2) = m(0,2);
+  trans(0,3) = 0;
+  trans(1,0) = m(1,0);
+  trans(1,1) = m(1,1);
+  trans(1,2) = m(1,2);
+  trans(1,3) = 0;
+  trans(2,0) = m(2,0);
+  trans(2,1) = m(2,1);
+  trans(2,2) = m(2,2);
+  trans(2,3) = 0;
+  trans(3,0) = 0;
+  trans(3,1) = 0;
+  trans(3,2) = 0;
+  trans(3,3) = 1;
+
+  return trans;
 }
 
 #endif
