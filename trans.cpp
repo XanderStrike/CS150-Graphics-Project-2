@@ -381,10 +381,18 @@ static void keyboard(const unsigned char key, const int x, const int y) {
   case 'o':
     affectedObject = (affectedObject + 1) % 3;
     cout << "Object cycled!" << endl;
+    if (affectedObject == 0 && viewpoint != 0) {
+      affectedObject = (affectedObject + 1) % 3;
+      cout << "Cannot move the camera while it isn't the viewpoint!" << endl;
+    }
     break;
   case 'v':
     viewpoint = (viewpoint + 1) % 3;
     cout << "Viewpoint cycled!" << endl;
+    if (affectedObject == 0 && viewpoint != 0) {
+      affectedObject = (affectedObject + 1) % 3;
+      cout << "Cannot move the camera while it isn't the viewpoint!" << endl;
+    }
     break;
   case 'd':
     Matrix4 asdf = linFact(g_objectRbt[0]);
